@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:5000'); // Your backend
+const socket = io('https://coursexpert-backend.up.railway.app'); // Your backend
 
 export default socket;
