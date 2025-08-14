@@ -64,7 +64,7 @@ function StudentViewCommonHeader() {
     },
     {
       label: "Live Chat",
-      path: "/instructlist",
+      path: "/userschat",
       icon: MessageCircle,
       description: "Chat with instructors"
     }

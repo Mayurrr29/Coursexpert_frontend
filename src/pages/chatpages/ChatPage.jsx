@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-const ChatPage = () => {
-  const { instructorId } = useParams();
+const ChatPage = ({ instructorId }) => {
+  
   const { auth } = useContext(AuthContext);
   const user = auth?.user?._id;
   const username = auth?.user?.userName;
@@ -29,8 +29,10 @@ const ChatPage = () => {
 
   useEffect(() => {
     const setupChat = async () => {
+        setIsInitialized(false);
+
       try {
-        if (user && instructorId && !isInitialized) {
+        if (user && instructorId ) {
           const chat = await createOrGetChat(instructorId);
           if (chat) {
             await fetchMessages(chat._id);
@@ -43,7 +45,7 @@ const ChatPage = () => {
     };
 
     setupChat();
-  }, [user, instructorId, isInitialized]);
+  }, [user, instructorId]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {

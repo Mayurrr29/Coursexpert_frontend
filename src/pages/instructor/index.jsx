@@ -9,6 +9,7 @@ import { fetchInstructorCourseListService } from "@/services";
 import { BarChart, Book, LogOut,MessageSquare } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import StudentList from "../chatpages/StudentList";
+import InstructorSide from "../chatpages/InstructorSide";
 
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -29,7 +30,7 @@ function InstructorDashboardpage() {
       icon: BarChart,
       label: "Dashboard",
       value: "dashboard",
-      component: <InstructorDashboard listOfCourses={instructorCoursesList} />,
+      component: <InstructorSide></InstructorSide>,
     },
     {
       icon: MessageSquare,

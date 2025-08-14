@@ -5,7 +5,7 @@ import axiosInstance from "@/api/axiosInstance";
 import { Avatar } from "@/components/ui/avatar"; // If you have shadcn Avatar
 import { Skeleton } from "@/components/ui/skeleton"; // For loading
 
-const StudentList = () => {
+const StudentList = ({ onSelectStudent }) => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -25,9 +25,6 @@ const StudentList = () => {
     fetchStudents();
   }, []);
 
-  const handleSelect = (studentId) => {
-    navigate(`/instructor/chat/${studentId}`);
-  };
 
   return (
     <div className="p-4">
@@ -47,7 +44,7 @@ const StudentList = () => {
           {students.map((student) => (
             <li
               key={student._id}
-              onClick={() => handleSelect(student._id)}
+               onClick={() => onSelectStudent(student._id)}
               className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition rounded-lg"
             >
               <Avatar className="h-10 w-10">

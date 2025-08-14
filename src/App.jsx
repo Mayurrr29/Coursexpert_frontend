@@ -18,6 +18,8 @@ import ChatPage from "./pages/chatpages/ChatPage";
 import InstructorChatList from "./pages/chatpages/InstructorChatList";
 import StudentList from "./pages/chatpages/StudentList";
 import InstructorChatPage from "./pages/chatpages/InstructorChatPage";
+import UserSide from "./pages/chatpages/UserSide";
+import InstructorSide from "./pages/chatpages/InstructorSide";
 function App() {
   const { auth } = useContext(AuthContext);
 
@@ -84,9 +86,20 @@ function App() {
         <Route path="payment-return" element={<PaypalPaymentReturnPage />} />
         <Route path="student-courses" element={<StudentCoursesPage />} />
         <Route path="course-progress/:id" element={<StudentViewCourseProgressPage />} />
-        <Route path="instructlist" element={<InstructorsList />}/> 
-        <Route path="chat/:instructorId" element={<ChatPage />} />        //chat with instructor USERSSIDE
+        {/* <Route path="instructlist" element={<InstructorsList />}/> 
+        <Route path="chat/:instructorId" element={<ChatPage />} />        //chat with instructor USERSSIDE */}
+        <Route path="userschat" element={<UserSide />} />   // chat with instructors FOR USERS
+
         <Route path="instructor/chat" 
+        element={
+          <RouteGuard
+             element={<InstructorSide />} 
+             authenticated={auth?.authenticate}
+              user={auth?.user}
+          />
+        }
+        /> 
+        {/* <Route path="instructor/chat" 
         element={
           <RouteGuard
              element={<InstructorChatList />} 
@@ -94,7 +107,6 @@ function App() {
               user={auth?.user}
           />
         }
-        
         /> // chat with students
         <Route path="/instructor/chat/:studentId" 
          element={
@@ -104,7 +116,7 @@ function App() {
               user={auth?.user}
           />
          } 
-        />  // chat with student
+        />  // chat with student */}
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

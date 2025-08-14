@@ -5,7 +5,7 @@ import axiosInstance from "@/api/axiosInstance";
 import { Avatar } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function InstructorsList() {
+export default function InstructorsList({ onSelectInstructor }) {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -27,9 +27,10 @@ export default function InstructorsList() {
   }, []);
 
   const handleSelect = (instructorId) => {
-    navigate(`/chat/${instructorId}`);
+    if (onSelectInstructor) {
+      onSelectInstructor(instructorId);
+    }
   };
-
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}

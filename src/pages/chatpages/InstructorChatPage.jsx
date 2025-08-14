@@ -1,15 +1,11 @@
-// src/pages/chat/InstructorChatPage.jsx
-import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useRef } from "react";
 import { useInstructorChat } from "@/context/chat-context/InstructorChatContext";
 import { AuthContext } from "@/context/auth-context";
 import dayjs from "dayjs";
 
-const InstructorChatPage = () => {
-  const { studentId } = useParams();
+const InstructorChatPage = ({ studentId }) => {
   const { auth } = useContext(AuthContext);
   const instructor = auth?.user?._id;
-  const instructorName = auth?.user?.userName;
 
   const {
     messages,
@@ -19,21 +15,28 @@ const InstructorChatPage = () => {
   } = useInstructorChat();
 
   const [input, setInput] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const setupChat = async () => {
-      if (instructor && studentId) {
-        const chat = await createOrGetChat(studentId);
-        if (chat) {
-          await fetchMessages(chat._id);
+      try {
+        setIsInitialized(false); // disable input until ready
+        if (instructor && studentId) {
+          const chat = await createOrGetChat(studentId);
+          if (chat) {
+            await fetchMessages(chat._id);
+          }
+          setIsInitialized(true);
         }
+      } catch (err) {
+        console.error("Chat setup error:", err);
       }
     };
     setupChat();
   }, [instructor, studentId]);
 
-  // Auto-scroll to bottom when messages change
+  // Auto-scroll when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -49,8 +52,7 @@ const InstructorChatPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-100px)] max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
-      
+    <div className="flex flex-col h-screen bg-white dark:bg-gray-900">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 sticky top-0 z-10">
         <div className="h-10 w-10 flex items-center justify-center bg-green-600 text-white rounded-full font-bold text-lg">
@@ -60,7 +62,6 @@ const InstructorChatPage = () => {
           <h2 className="font-semibold text-gray-900 dark:text-white">
             Chat with Student
           </h2>
-          <span className="text-sm text-gray-500">Active now</span>
         </div>
       </div>
 
@@ -97,7 +98,7 @@ const InstructorChatPage = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
+      {/* Input */}
       <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex gap-2">
         <input
           value={input}
@@ -105,10 +106,11 @@ const InstructorChatPage = () => {
           onKeyPress={handleKeyPress}
           placeholder="Type a message..."
           className="flex-1 px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-900 dark:text-white"
+          disabled={!isInitialized}
         />
         <button
           onClick={handleSend}
-          disabled={!input.trim()}
+          disabled={!input.trim() || !isInitialized}
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full disabled:bg-green-400 disabled:cursor-not-allowed transition-all"
         >
           Send
