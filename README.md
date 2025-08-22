@@ -3,7 +3,7 @@
 This is the **frontend** of CourseXpert – a modern Learning Management System (LMS).  
 It provides a responsive and interactive UI for students, instructors, and admins to manage courses, payments, and live communication.  
 
-Deployed Live: 🌐 [Vercel](https://vercel.com)
+Deployed Live: 🌐 [Vercel](https://coursexpert.vercel.app)
 
 ---
 
