@@ -1,6 +1,45 @@
-# React + Vite
+# 🎨 CourseXpert Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **frontend** of CourseXpert – a modern Learning Management System (LMS).  
+It provides a responsive and interactive UI for students, instructors, and admins to manage courses, payments, and live communication.  
+
+Deployed Live: 🌐 [Vercel](https://vercel.com)
+
+---
+
+## 🚀 Features (Frontend)
+
+- 👤 Authentication (Login/Signup with JWT)  
+- 🏫 User roles: Student, Instructor, Admin  
+- 📖 Browse and enroll in courses  
+- 🎥 Video lectures & resources integrated via **Cloudinary**  
+- 💳 **PayPal payment integration** for premium courses  
+- 💬 **Live chat and real-time commenting** using **Socket.IO client**  
+- 📊 Progress tracking for students  
+- 🎨 Modern UI using **Shadcn + TailwindCSS**  
+- 🌐 Fully responsive across devices  
+
+---
+
+## 🛠️ Tech Stack (Frontend)
+
+- ⚛️ React.js  
+- ⚡ Context API (for state management)  
+- 🎨 Shadcn + TailwindCSS (UI design)  
+- 🔗 React Router DOM (routing)  
+- 🌐 Axios (API requests)  
+- 💬 Socket.IO Client (real-time chat & comments)  
+- 💳 PayPal SDK (payment integration)  
+- 🚀 Deployed on **Vercel**  
+
+---
+
+## ⚡ Getting Started (Frontend)
+
+### 1️⃣ Install dependencies
+```bash
+cd client
+npm install
 
 Currently, two official plugins are available:
 
