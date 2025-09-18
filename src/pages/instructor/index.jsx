@@ -8,7 +8,6 @@ import { InstructorContext } from "@/context/instructor-context";
 import { fetchInstructorCourseListService } from "@/services";
 import { BarChart, Book, LogOut,MessageSquare } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import StudentList from "../chatpages/StudentList";
 import InstructorSide from "../chatpages/InstructorSide";
 
 function InstructorDashboardpage() {
@@ -30,13 +29,13 @@ function InstructorDashboardpage() {
       icon: BarChart,
       label: "Dashboard",
       value: "dashboard",
-      component: <InstructorSide></InstructorSide>,
+      component:<InstructorDashboard listOfCourses={instructorCoursesList}/>
     },
     {
       icon: MessageSquare,
       label: "LiveMessages",
       value: "LiveMessages",
-      component:<StudentList></StudentList>// Placeholder for future comments feature
+      component: <InstructorSide></InstructorSide>
     },
     {
       icon: Book,

@@ -34,6 +34,12 @@ import {
   Filter,
   Search,
   User,
+  Code,
+  BarChart3,
+  Smartphone,
+  Palette,
+  Briefcase,
+  Megaphone,
 } from "lucide-react";
 
 // Enhanced Course Card with animations and better UX
@@ -118,25 +124,6 @@ const CourseCard = memo(function CourseCard({ course, onNavigate }) {
             </div>
           </div>
 
-          {/* <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="w-4 h-4 text-yellow-400" />
-              ))}
-              <span className="text-sm text-gray-400 ml-1">(4.8)</span>
-            </div>
-            <div className="flex items-center gap-4 text-sm text-gray-400">
-              <div className="flex items-center gap-1">
-                <Users className="w-4 h-4" />
-                <span>2.4k</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                <span>12h</span>
-              </div>
-            </div>
-          </div> */}
-
           <div className="flex gap-2">
             <Badge className="bg-purple-500/20 text-purple-300 hover:bg-purple-500/30">
               Beginner
@@ -162,36 +149,126 @@ const CourseCard = memo(function CourseCard({ course, onNavigate }) {
   );
 });
 
-// Enhanced Category Card
+// Enhanced Category Card with Images
 const CategoryCard = memo(function CategoryCard({ category, onClick }) {
-  const icons = {
-    "web-development": Globe,
-    "data-science": TrendingUp,
-    "mobile-development": Zap,
-    design: Sparkles,
-    business: Target,
-    marketing: Users,
+  const categoryData = {
+    "web-development": {
+      icon: Code,
+      gradient: "from-blue-500 to-cyan-500",
+      bgGradient: "from-blue-500/10 to-cyan-500/10",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=center",
+      courses: "180+ courses"
+    },
+    "data-science": {
+      icon: BarChart3,
+      gradient: "from-green-500 to-emerald-500",
+      bgGradient: "from-green-500/10 to-emerald-500/10",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&crop=center",
+      courses: "120+ courses"
+    },
+    "mobile-development": {
+      icon: Smartphone,
+      gradient: "from-purple-500 to-violet-500",
+      bgGradient: "from-purple-500/10 to-violet-500/10",
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop&crop=center",
+      courses: "95+ courses"
+    },
+    "design": {
+      icon: Palette,
+      gradient: "from-pink-500 to-rose-500",
+      bgGradient: "from-pink-500/10 to-rose-500/10",
+      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop&crop=center",
+      courses: "150+ courses"
+    },
+    "business": {
+      icon: Briefcase,
+      gradient: "from-orange-500 to-amber-500",
+      bgGradient: "from-orange-500/10 to-amber-500/10",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center",
+      courses: "200+ courses"
+    },
+    "marketing": {
+      icon: Megaphone,
+      gradient: "from-red-500 to-pink-500",
+      bgGradient: "from-red-500/10 to-pink-500/10",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&crop=center",
+      courses: "110+ courses"
+    }
   };
 
-  const IconComponent = icons[category.id] || BookOpen;
+  const data = categoryData[category.id] || {
+    icon: BookOpen,
+    gradient: "from-purple-500 to-pink-500",
+    bgGradient: "from-purple-500/10 to-pink-500/10",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&crop=center",
+    courses: "100+ courses"
+  };
+
+  const IconComponent = data.icon;
 
   return (
     <Card
       onClick={() => onClick(category.id)}
-      className="group cursor-pointer bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 backdrop-blur-sm"
+      className="group cursor-pointer bg-gradient-to-br from-gray-800/90 to-gray-900/90 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 backdrop-blur-sm overflow-hidden min-w-[280px] flex-shrink-0"
     >
-      <CardContent className="p-6 text-center">
-        <div className="mb-4 flex justify-center">
-          <div className="p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
-            <IconComponent className="w-8 h-8 text-purple-400 group-hover:text-purple-300 transition-colors" />
+      <div className="relative overflow-hidden">
+        <img
+          src={data.image}
+          alt={category.label}
+          className="w-full h-40 object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        
+        <div className="absolute bottom-4 left-4 right-4">
+          <div className={`inline-flex p-3 bg-gradient-to-r ${data.bgGradient} backdrop-blur-sm rounded-2xl mb-3 group-hover:${data.bgGradient.replace('/10', '/20')} transition-all`}>
+            <IconComponent className={`w-8 h-8 bg-gradient-to-r ${data.gradient} text-transparent bg-clip-text`} style={{
+              filter: 'drop-shadow(0 0 8px rgba(147, 51, 234, 0.5))'
+            }} />
           </div>
         </div>
-        <h3 className="font-semibold text-white group-hover:text-purple-300 transition-colors">
+      </div>
+      
+      <CardContent className="p-6">
+        <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors mb-2">
           {category.label}
         </h3>
-        <p className="text-sm text-gray-400 mt-2">150+ courses</p>
+        <p className="text-gray-400 text-sm mb-4">{data.courses}</p>
+        
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-purple-400 font-medium">Explore Now</span>
+          <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+        </div>
       </CardContent>
     </Card>
+  );
+});
+
+// Auto-sliding Category Carousel Component
+const CategoryCarousel = memo(function CategoryCarousel({ categories, onCategoryClick }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Duplicate categories to create seamless infinite scroll effect
+  const extendedCategories = [...categories, ...categories];
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div
+        className={`flex gap-3 animate-scroll ${isHovered ? "pause-animation" : ""}`}
+        style={{ width: `${extendedCategories.length * 300}px` }}
+      >
+        {extendedCategories.map((category, index) => (
+          <CategoryCard
+            key={`${category.id}-${index}`}
+            category={category}
+            onClick={onCategoryClick}
+          />
+        ))}
+      </div>
+    </div>
   );
 });
 
@@ -376,39 +453,35 @@ function StudentHomePage() {
           </div>
         </section>
 
-        {/* Enhanced Course Categories */}
-        <section className="py-20 px-6 lg:px-20 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent" />
-          <div className="max-w-7xl mx-auto relative">
-            <div className="text-center mb-16">
-              <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 mb-4">
-                <Filter className="w-4 h-4 mr-2" />
-                Categories
-              </Badge>
-              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-                Explore{" "}
-                <span className="bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">
-                  Learning Paths
-                </span>
-              </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                Choose from our carefully curated categories to find the perfect
-                learning journey for your goals
-              </p>
-            </div>
+        {/* Enhanced Course Categories with Auto-sliding Carousel */}
+      <section className="py-20 px-6 lg:px-20 relative">
+  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent" />
+  <div className="max-w-7xl mx-auto relative">
+    <div className="text-center mb-16">
+      <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 mb-4">
+        <Filter className="w-4 h-4 mr-2" />
+        Categories
+      </Badge>
+      <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+        Explore{" "}
+        <span className="bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">
+          Learning Paths
+        </span>
+      </h2>
+      <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+        Choose from our carefully curated categories to find the perfect
+        learning journey for your goals
+      </p>
+    </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {courseCategories.map((category) => (
-                <div key={category.id}>
-                  <CategoryCard
-                    category={category}
-                    onClick={handleNavigateToCoursesPage}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+    {/* Auto-sliding Category Carousel */}
+    <CategoryCarousel 
+      categories={courseCategories} 
+      onCategoryClick={handleNavigateToCoursesPage}
+    />
+  </div>
+</section>
+
 
         {/* Enhanced Featured Courses */}
         <section
@@ -666,7 +739,7 @@ function StudentHomePage() {
                       </div>
 
                       <blockquote className="text-gray-300 mb-6 italic leading-relaxed">
-                        “{t.quote}”
+                        "{t.quote}"
                       </blockquote>
 
                       <div className="flex items-center gap-4">
@@ -872,7 +945,7 @@ function StudentHomePage() {
                   <span>© 2025 CourseXpert. All rights reserved.</span>
                   <div className="flex items-center gap-1">
                     <Heart className="w-4 h-4 text-red-500" />
-                    <span>Made with love in India</span>
+                    <span>Made by Mayur Panchal </span>
                   </div>
                 </div>
 

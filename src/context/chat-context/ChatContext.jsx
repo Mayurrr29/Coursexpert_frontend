@@ -34,7 +34,6 @@ export const ChatProvider = ({ children }) => {
     };
 
     const handleUserStatus = ({ userId, isOnline, lastSeen }) => {
-console.log(`User ${userId} is ${isOnline ? 'online' : 'offline'} at ${lastSeen}`);
       setOnlineUsers((prev) => ({
         ...prev,
         [userId]: { isOnline, lastSeen }

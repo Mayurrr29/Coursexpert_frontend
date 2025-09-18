@@ -6,15 +6,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Search, MessageCircle, Users, Filter, MoreHorizontal } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useChat } from "@/context/chat-context/ChatContext";
 dayjs.extend(relativeTime);
 
-export default function InstructorsList({ onSelectInstructor }) {
+export default function InstructorsList({ onSelectInstructor ,onSelectInstructorName}) {
   const [instructors, setInstructors] = useState([]);
   const [filteredInstructors, setFilteredInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("all"); // all, online, offline
+  
   const navigate = useNavigate();
+  const {
+    getUserStatus
+  } = useChat();
+  // Keep online/offline status
 
   useEffect(() => {
     const fetchInstructors = async () => {
@@ -47,10 +53,15 @@ export default function InstructorsList({ onSelectInstructor }) {
     }
 
     // Status filter
+    
     if (filterStatus === "online") {
       filtered = filtered.filter(inst => inst.isOnline);
+    
     } else if (filterStatus === "offline") {
+      
       filtered = filtered.filter(inst => !inst.isOnline);
+     
+      
     }
 
     setFilteredInstructors(filtered);
@@ -58,13 +69,15 @@ export default function InstructorsList({ onSelectInstructor }) {
 
   const handleSelect = (instructorId,instructorName) => {
     if (onSelectInstructor) {
-      onSelectInstructor(instructorId,);
+      onSelectInstructor(instructorId);
+      onSelectInstructorName(instructorName);
     }
   };
 
   const getStatusText = (instructor) => {
-    if (instructor.isOnline) {
-      return { text: "Online now", color: "text-emerald-600 dark:text-emerald-400" };
+      const {isOnline} = getUserStatus(instructor);
+    if (isOnline) {
+      return { text: "Online", color: "text-emerald-600 dark:text-emerald-400" };
     } else if (instructor.lastSeen) {
       return { 
         text: `Last seen ${dayjs(instructor.lastSeen).fromNow()}`, 
@@ -170,7 +183,8 @@ export default function InstructorsList({ onSelectInstructor }) {
         ) : (
           <div className="p-4 space-y-2">
             {filteredInstructors.map((inst, index) => {
-              const status = getStatusText(inst);
+              
+              const status = getStatusText(inst._id);
               return (
                 <div
                   key={inst._id}

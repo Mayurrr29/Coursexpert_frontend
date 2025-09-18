@@ -28,7 +28,7 @@ export const InstructorChatProvider = ({ children }) => {
 
     // ✅ Presence listener
     socket.on("user-status", ({ userId, isOnline, lastSeen }) => {
-      console.log(`User ${userId} is ${isOnline ? 'online' : 'offline'} at ${lastSeen}`);
+      
       setOnlineUsers((prev) => ({
         ...prev,
         [userId]: { isOnline, lastSeen }

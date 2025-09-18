@@ -22,7 +22,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://coursexpertbackend-production.up.railway.app",
+  baseURL: "https://coursexpert-backend.onrender.com",
 });
 
 axiosInstance.interceptors.request.use(

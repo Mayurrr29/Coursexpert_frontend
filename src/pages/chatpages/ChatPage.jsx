@@ -7,10 +7,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Send, ArrowLeft, MoreVertical, Phone, Video } from "lucide-react";
 dayjs.extend(relativeTime);
 
-const ChatPage = ({ instructorId, onBack }) => {
+const ChatPage = ({ instructorId,instructorName, onBack }) => {
   const { auth } = useContext(AuthContext);
   const user = auth?.user?._id;
-  const username = auth?.user?.userName;
+  const username = instructorName;
 
   const {
     messages,
